@@ -1,8 +1,14 @@
 import { useState, useCallback } from 'react';
 import type { ModalType, ToastMessage } from '@/types';
 
+export type NotesModalState = {
+  isOpen: boolean;
+  kpiName: string;
+} | null;
+
 export function useModal() {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
+  const [notesModal, setNotesModal] = useState<NotesModalState>(null);
 
   const openModal = useCallback((modal: ModalType) => {
     setActiveModal(modal);
@@ -12,7 +18,15 @@ export function useModal() {
     setActiveModal(null);
   }, []);
 
-  return { activeModal, openModal, closeModal };
+  const openNotesModal = useCallback((kpiName: string) => {
+    setNotesModal({ isOpen: true, kpiName });
+  }, []);
+
+  const closeNotesModal = useCallback(() => {
+    setNotesModal(null);
+  }, []);
+
+  return { activeModal, openModal, closeModal, notesModal, openNotesModal, closeNotesModal };
 }
 
 export function useToast() {

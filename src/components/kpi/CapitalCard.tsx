@@ -1,10 +1,20 @@
 interface CapitalCardProps {
   value: string;
+  onNotepad?: () => void;
 }
 
-export function CapitalCard({ value }: CapitalCardProps) {
+export function CapitalCard({ value, onNotepad }: CapitalCardProps) {
   return (
-    <div className="kpi-card bg-gradient-to-br from-primary-600 to-primary-700 text-white text-center py-2 sm:py-3">
+    <div className="kpi-card bg-gradient-to-br from-primary-600 to-primary-700 text-white text-center py-2 sm:py-3 relative">
+      {onNotepad && (
+        <button
+          onClick={onNotepad}
+          className="absolute top-1 right-1 text-[8px] sm:text-[10px] text-white/60 hover:text-white transition-colors"
+          title="Notes"
+        >
+          📝
+        </button>
+      )}
       <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg mx-auto mb-1 flex items-center justify-center text-sm sm:text-base bg-white/20 text-white">
         💎
       </div>

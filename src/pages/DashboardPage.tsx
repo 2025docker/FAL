@@ -10,6 +10,7 @@ import { IncomeModal } from '@/components/modals/IncomeModal';
 import { WithdrawModal } from '@/components/modals/WithdrawModal';
 import { MenuModal } from '@/components/modals/MenuModal';
 import { InfoModal } from '@/components/modals/InfoModal';
+import { NotesModal } from '@/components/modals/NotesModal';
 import { useModal, useFilters, useToast } from '@/hooks/useUI';
 import { useFinance } from '@/hooks/useFinance';
 import { useAuth } from '@/contexts/AuthContext';
@@ -21,10 +22,14 @@ import type { TransactionType } from '@/types';
 export function DashboardPage() {
   const { user } = useAuth();
   const { transactions, dcaTransactions, settings, engine, kpis, loadingAll, addTransaction, addDcaTransaction, deleteTransaction, batchInsertTransactions, isMutating } = useFinance();
-  const { activeModal, openModal, closeModal } = useModal();
+  const { activeModal, openModal, closeModal, notesModal, openNotesModal, closeNotesModal } = useModal();
   const { filter, setFilter, dateFrom, setDateFrom, dateTo, setDateTo, sortBy, setSortBy, keyword, setKeyword, page, setPage, pageSize } = useFilters();
   const { toasts, showToast, removeToast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleNotepad = (kpiName: string) => {
+    openNotesModal(kpiName);
+  };
 
   const currency = settings?.currency || 'IDR';
   const factory = new TransactionFactory(user?.id || 'local', currency);
@@ -261,7 +266,7 @@ export function DashboardPage() {
 
                 <div className="grid grid-cols-3 gap-2 mb-2">
                   <KpiCard icon="📉" label="Total DCA" value={formatCurrency(kpis.dcaValue)} variant="dca" />
-                  <KpiCard icon="🔒" label="Locked Savings" value={formatCurrency(kpis.lockedSavings)} variant="locked" />
+                  <KpiCard icon="🔒" label="Locked Savings" value={formatCurrency(kpis.lockedSavings)} variant="locked" onNotepad={() => handleNotepad('Locked Savings')} />
                   <KpiCard icon="📊" label="Saving Rates" value={`${kpis.savingsRate.toFixed(1)}%`} variant="savings" />
                 </div>
 
@@ -273,7 +278,7 @@ export function DashboardPage() {
                 </div>
 
                 <div className="mb-4">
-                  <CapitalCard value={formatCurrency(kpis.capital, true)} />
+                  <CapitalCard value={formatCurrency(kpis.capital, true)} onNotepad={() => handleNotepad('Total Capital')} />
                 </div>
              </div>
            </>
@@ -380,6 +385,14 @@ export function DashboardPage() {
             {toast.message}
           </div>
         ))}
+
+        {notesModal && (
+          <NotesModal
+            isOpen={notesModal.isOpen}
+            onClose={closeNotesModal}
+            kpiName={notesModal.kpiName}
+          />
+        )}
       </>
     </div>
   );

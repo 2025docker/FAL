@@ -7,6 +7,7 @@ interface KpiCardProps {
   sub?: string;
   variant: 'income' | 'expense' | 'asset' | 'balance' | 'daily' | 'monthly' | 'savings' | 'locked' | 'dca' | 'ratio';
   className?: string;
+  onNotepad?: () => void;
 }
 
 const variantClasses: Record<string, string> = {
@@ -35,19 +36,28 @@ const iconBgClasses: Record<string, string> = {
   ratio: 'bg-warning-100',
 };
 
-export function KpiCard({ icon, label, value, sub, variant, className }: KpiCardProps) {
+export function KpiCard({ icon, label, value, sub, variant, className, onNotepad }: KpiCardProps) {
   const isBalance = variant === 'balance';
   const numericValue = parseFloat(value.replace(/[^0-9.-]/g, ''));
 
   return (
     <div
       className={clsx(
-        'kpi-card py-2 sm:py-3',
+        'kpi-card py-2 sm:py-3 relative',
         isBalance && numericValue >= 0 && 'border-l-4 border-success-500 bg-gradient-to-br from-white to-success-50',
         isBalance && numericValue < 0 && 'border-l-4 border-danger-500 bg-gradient-to-br from-white to-danger-50',
         className
       )}
     >
+      {onNotepad && (
+        <button
+          onClick={onNotepad}
+          className="absolute top-1 right-1 text-[8px] sm:text-[10px] text-gray-400 hover:text-gray-600 transition-colors"
+          title="Notes"
+        >
+          📝
+        </button>
+      )}
       <div className={clsx('w-7 h-7 sm:w-8 sm:h-8 rounded-lg mx-auto mb-1 flex items-center justify-center text-sm sm:text-base', iconBgClasses[variant])}>
         {icon}
       </div>
