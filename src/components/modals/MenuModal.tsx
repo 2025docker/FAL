@@ -100,7 +100,7 @@ export function MenuModal({ isOpen, onClose, onExport, onImport, onClear, onOpen
         </div>
 
         <div className="px-4 py-3 border-t border-gray-100 bg-gray-50 rounded-b-2xl">
-          <div className="text-center text-xs text-gray-400 font-medium">SSIR-FAL V.1.0.1 @2026</div>
+          <div className="text-center text-xs text-gray-400 font-medium">SSIR-FAL V.1.0.2 @2026</div>
         </div>
       </div>
     </div>

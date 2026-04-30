@@ -402,7 +402,7 @@ export function DashboardPage() {
     </div>
 
     <footer className="py-4 text-center text-sm text-gray-500">
-      SSIR-FAL V.1.0.1 @2026
+      SSIR-FAL V.1.0.2 @2026
     </footer>
     </>
   );
