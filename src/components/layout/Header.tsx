@@ -28,11 +28,17 @@ export function Header({ onAddIncome, onAddWithdraw, onOpenMenu }: HeaderProps) 
           </div>
 
           <div className="flex gap-1.5 items-center flex-shrink-0">
-            <button className="btn btn-primary btn-sm !px-2.5 !py-1.5 text-xs" onClick={onAddIncome}>
-              +Inc
+            <button className="btn btn-success btn-sm !px-2.5 !py-1.5 text-xs flex items-center gap-1" onClick={onAddIncome}>
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M5 2v6M2 5h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+              Inc
             </button>
-            <button className="btn btn-success btn-sm !px-2.5 !py-1.5 text-xs" onClick={onAddWithdraw}>
-              +Wdr
+            <button className="btn btn-danger btn-sm !px-2.5 !py-1.5 text-xs flex items-center gap-1" onClick={onAddWithdraw}>
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 5h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+              Wdr
             </button>
             <button className="btn btn-outline btn-sm p-1.5" onClick={onOpenMenu} title="Menu">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
