@@ -272,7 +272,8 @@ export function DashboardPage() {
                 <KpiCard icon="📈" label="Asset Ratio" value={`${kpis.assetRatio.toFixed(1)}%`} sub="% assets" variant="ratio" />
                 <CapitalCard value={formatCurrency(kpis.capital, true)} />
               </div>
-             </>
+            </div>
+           </>
         )}
       </div>
 
