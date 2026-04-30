@@ -25,17 +25,22 @@ export function LoginPage() {
         <p className="text-sm text-gray-500 mb-6">Finance & Asset Ledger</p>
 
         <p className="text-xs text-gray-400 mb-6">
-          {isConfigured
-            ? 'Sign in to access your financial data'
-            : 'Demo mode — all data stored locally in your browser'}
+          Sign in with Google to access your financial data
         </p>
 
         <button
           className="btn btn-primary w-full"
           onClick={signIn}
+          disabled={!isConfigured}
         >
-          {isConfigured ? 'Sign in with Google' : 'Start Demo'}
+          {isConfigured ? 'Sign in with Google' : 'Configuration Required'}
         </button>
+
+        {!isConfigured && (
+          <p className="text-xs text-red-500 mt-4">
+            Please configure Supabase environment variables (VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY)
+          </p>
+        )}
       </div>
     </div>
   );

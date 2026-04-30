@@ -4,16 +4,18 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('Supabase credentials not configured. Using demo mode with localStorage.');
+  console.error('Supabase credentials are not configured. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file.');
 }
 
 export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder-key',
+  supabaseUrl || '',
+  supabaseAnonKey || '',
   {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
+      detectSessionInUrl: true,
+      flowType: 'pkce',
     },
     global: {
       headers: {
@@ -23,29 +25,9 @@ export const supabase = createClient(
   }
 );
 
-const PLACEHOLDER_URLS = [
-  'https://your-project.supabase.co',
-  'https://placeholder.supabase.co',
-  'https://example.supabase.co',
-];
-
-const PLACEHOLDER_KEYS = [
-  'your-anon-key-here',
-  'placeholder-key',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
-];
-
-function isPlaceholderUrl(url: string): boolean {
-  return PLACEHOLDER_URLS.some(p => url.includes(p) || url === p);
-}
-
-function isPlaceholderKey(key: string): boolean {
-  return PLACEHOLDER_KEYS.some(p => key.includes(p) || key === p);
-}
-
 export const isSupabaseConfigured = !!(
   supabaseUrl &&
   supabaseAnonKey &&
-  !isPlaceholderUrl(supabaseUrl) &&
-  !isPlaceholderKey(supabaseAnonKey)
+  supabaseUrl !== '' &&
+  supabaseAnonKey !== ''
 );

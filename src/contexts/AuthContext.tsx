@@ -2,31 +2,12 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import type { User } from '@supabase/supabase-js';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 
-const DEMO_USER_KEY = 'fal_demo_user';
-
-const DEMO_USER: User = {
-  id: 'demo-user-local',
-  aud: 'authenticated',
-  role: 'authenticated',
-  email: 'demo@fal.local',
-  email_confirmed_at: new Date().toISOString(),
-  phone: '',
-  confirmed_at: new Date().toISOString(),
-  last_sign_in_at: new Date().toISOString(),
-  app_metadata: { provider: 'demo' },
-  user_metadata: { display_name: 'Demo User' },
-  identities: [],
-  created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString(),
-} as unknown as User;
-
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   signIn: () => Promise<void>;
   signOut: () => Promise<void>;
   isConfigured: boolean;
-  isDemo: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -37,10 +18,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!isSupabaseConfigured) {
-      const wasDemo = localStorage.getItem(DEMO_USER_KEY);
-      if (wasDemo) {
-        setUser(DEMO_USER);
-      }
       setLoading(false);
       return;
     }
@@ -60,8 +37,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = useCallback(async () => {
     if (!isSupabaseConfigured) {
-      localStorage.setItem(DEMO_USER_KEY, 'true');
-      setUser(DEMO_USER);
+      console.error('Supabase is not configured. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
       return;
     }
     await supabase.auth.signInWithOAuth({
@@ -73,11 +49,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signOut = useCallback(async () => {
-    if (!isSupabaseConfigured) {
-      localStorage.removeItem(DEMO_USER_KEY);
-      setUser(null);
-      return;
-    }
     await supabase.auth.signOut();
   }, []);
 
@@ -88,7 +59,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       signIn,
       signOut,
       isConfigured: isSupabaseConfigured,
-      isDemo: !isSupabaseConfigured,
     }}>
       {children}
     </AuthContext.Provider>
