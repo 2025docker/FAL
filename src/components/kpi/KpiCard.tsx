@@ -42,21 +42,21 @@ export function KpiCard({ icon, label, value, sub, variant, className }: KpiCard
   return (
     <div
       className={clsx(
-        'kpi-card py-3',
+        'kpi-card py-2 sm:py-3',
         isBalance && numericValue >= 0 && 'border-l-4 border-success-500 bg-gradient-to-br from-white to-success-50',
         isBalance && numericValue < 0 && 'border-l-4 border-danger-500 bg-gradient-to-br from-white to-danger-50',
         className
       )}
     >
-      <div className={clsx('w-8 h-8 rounded-lg mx-auto mb-1 flex items-center justify-center text-base', iconBgClasses[variant])}>
+      <div className={clsx('w-7 h-7 sm:w-8 sm:h-8 rounded-lg mx-auto mb-1 flex items-center justify-center text-sm sm:text-base', iconBgClasses[variant])}>
         {icon}
       </div>
-      <div className="text-[10px] text-gray-500 font-medium text-center mb-1">{label}</div>
-      <div className={clsx('text-lg md:text-xl font-bold text-center leading-tight', variantClasses[variant])}>
-        {value}
-      </div>
+      <div className="text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs text-gray-500 font-medium text-center mb-0.5 sm:mb-1">{label}</div>
+<div className={clsx('text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg font-bold text-center leading-tight', variantClasses[variant])}>
+         {value}
+       </div>
       {sub && (
-        <div className="text-[10px] text-gray-400 mt-0.5 text-center">{sub}</div>
+        <div className="text-[8px] sm:text-[9px] md:text-[10px] text-gray-400 mt-0.5 text-center">{sub}</div>
       )}
     </div>
   );
