@@ -1,4 +1,3 @@
-import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface HeaderProps {
@@ -8,20 +7,7 @@ interface HeaderProps {
 }
 
 export function Header({ onAddIncome, onAddWithdraw, onOpenMenu }: HeaderProps) {
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const userMenuRef = useRef<HTMLDivElement>(null);
-  const { user, signIn, signOut, isConfigured, isDemo } = useAuth();
-  const username = user?.user_metadata?.username || user?.email?.split('@')[0] || 'User';
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
-        setIsUserMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  const { user, signIn, isConfigured } = useAuth();
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -54,41 +40,10 @@ export function Header({ onAddIncome, onAddWithdraw, onOpenMenu }: HeaderProps) 
               + Withdraw
             </button>
 
-            {!user ? (
+            {!user && (
               <button className="btn btn-outline btn-sm" onClick={signIn}>
                 {isConfigured ? 'Login' : 'Start Demo'}
               </button>
-            ) : (
-              <div className="relative" ref={userMenuRef}>
-<button
-                   className="btn btn-outline btn-sm relative text-[8px]"
-                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                 >
-                   {username}
-                  {isDemo && (
-                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-warning-500 rounded-full"></span>
-                  )}
-                </button>
-                {isUserMenuOpen && (
-                  <div className="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-[51]">
-                    {isDemo && (
-                      <div className="px-4 py-2 text-xs text-warning-600 font-medium border-b border-gray-100 flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 bg-warning-500 rounded-full"></span>
-                        Demo Mode
-                      </div>
-                    )}
-                    <div className="px-4 py-2 text-xs text-gray-500 border-b border-gray-100">
-                      {user.email}
-                    </div>
-                    <button
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                      onClick={() => { signOut(); setIsUserMenuOpen(false); }}
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
             )}
           </div>
         </div>

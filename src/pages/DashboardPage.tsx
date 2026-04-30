@@ -23,7 +23,6 @@ export function DashboardPage() {
   const { user, signOut } = useAuth();
   const { transactions, dcaTransactions, settings, engine, kpis, loadingAll, addTransaction, addDcaTransaction, deleteTransaction, batchInsertTransactions, isMutating } = useFinance();
   const { activeModal, openModal, closeModal, notesModal, openNotesModal, closeNotesModal } = useModal();
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const username = user?.user_metadata?.username || user?.email?.split('@')[0] || 'User';
   const { filter, setFilter, dateFrom, setDateFrom, dateTo, setDateTo, sortBy, setSortBy, keyword, setKeyword, page, setPage, pageSize } = useFilters();
   const { toasts, showToast, removeToast } = useToast();
@@ -364,11 +363,9 @@ export function DashboardPage() {
           onImport={handleImport}
           onClear={handleClear}
           onOpenInfo={() => { closeModal(); openModal('info'); }}
-          onToggleUserMenu={() => setIsUserMenuOpen(!isUserMenuOpen)}
-          onLogout={() => { signOut(); setIsUserMenuOpen(false); closeModal(); }}
+          onLogout={() => { signOut(); closeModal(); }}
           username={username}
           email={user?.email || ''}
-          isUserMenuOpen={isUserMenuOpen}
         />
 
         <InfoModal
