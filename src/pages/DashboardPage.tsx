@@ -394,6 +394,7 @@ export function DashboardPage() {
             kpiName={notesModal.kpiName}
           />
         )}
+        </>
     </div>
 
     <footer className="py-4 text-center text-sm text-gray-500">
