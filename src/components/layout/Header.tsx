@@ -1,0 +1,96 @@
+import { useState, useRef, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+
+interface HeaderProps {
+  onAddIncome: () => void;
+  onAddWithdraw: () => void;
+  onOpenMenu: () => void;
+}
+
+export function Header({ onAddIncome, onAddWithdraw, onOpenMenu }: HeaderProps) {
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+  const { user, signIn, signOut, isConfigured, isDemo } = useAuth();
+  const username = user?.user_metadata?.username || user?.email?.split('@')[0] || 'User';
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <header className="bg-white shadow-sm sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 py-3">
+        <div className="flex justify-between items-center flex-wrap gap-3">
+          <div className="flex items-center gap-2">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="32" height="32" rx="8" fill="#2563eb" />
+              <path d="M8 22V10a2 2 0 012-2h2v10a2 2 0 01-2 2H8z" fill="#10b981" />
+              <path d="M14 22V8a2 2 0 012-2h2v12a2 2 0 01-2 2h-2z" fill="#f59e0b" />
+              <path d="M20 22V12a2 2 0 012-2h2v8a2 2 0 01-2 2h-2z" fill="#10b981" />
+              <path d="M8 24h14v2H8z" fill="#10b981" />
+            </svg>
+            <div className="flex flex-col leading-none">
+              <h1 className="text-base font-bold text-primary-600">FAL</h1>
+              <span className="text-[10px] text-gray-500">Finance & Asset Ledger</span>
+            </div>
+          </div>
+
+          <div className="flex gap-2 flex-wrap items-center">
+            <button className="btn btn-outline btn-sm" onClick={onOpenMenu}>
+              Menu
+            </button>
+            <button className="btn btn-primary btn-sm" onClick={onAddIncome}>
+              + Income
+            </button>
+            <button className="btn btn-success btn-sm" onClick={onAddWithdraw}>
+              + Withdraw
+            </button>
+
+            {!user ? (
+              <button className="btn btn-outline btn-sm" onClick={signIn}>
+                {isConfigured ? 'Login' : 'Start Demo'}
+              </button>
+            ) : (
+              <div className="relative" ref={userMenuRef}>
+                <button
+                  className="btn btn-outline btn-sm relative"
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                >
+                  {username}
+                  {isDemo && (
+                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-warning-500 rounded-full"></span>
+                  )}
+                </button>
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-[51]">
+                    {isDemo && (
+                      <div className="px-4 py-2 text-xs text-warning-600 font-medium border-b border-gray-100 flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 bg-warning-500 rounded-full"></span>
+                        Demo Mode
+                      </div>
+                    )}
+                    <div className="px-4 py-2 text-xs text-gray-500 border-b border-gray-100">
+                      {user.email}
+                    </div>
+                    <button
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      onClick={() => { signOut(); setIsUserMenuOpen(false); }}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
