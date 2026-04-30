@@ -52,6 +52,10 @@ export function MenuModal({ isOpen, onClose, onExport, onImport, onClear, onOpen
             </li>
           </ul>
         </div>
+
+        <div className="p-3 text-center text-xs text-gray-400 border-t border-gray-100">
+          SSIR-FAL V.1.0.1 @2026
+        </div>
       </div>
     </div>
   );

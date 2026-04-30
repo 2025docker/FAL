@@ -8,7 +8,7 @@ export function CapitalCard({ value, onNotepad }: CapitalCardProps) {
     <div className="kpi-card bg-gradient-to-br from-primary-600 to-primary-700 text-white text-center py-2 sm:py-3 relative">
       {onNotepad && (
         <button
-          onClick={onNotepad}
+          onClick={(e) => { e.stopPropagation(); onNotepad?.(); }}
           className="absolute top-1 right-1 text-[8px] sm:text-[10px] text-white/60 hover:text-white transition-colors"
           title="Notes"
         >

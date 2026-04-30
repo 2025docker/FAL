@@ -42,9 +42,11 @@ export function Header({ onAddIncome, onAddWithdraw, onOpenMenu }: HeaderProps) 
           </div>
 
           <div className="flex gap-2 flex-wrap items-center">
-            <button className="btn btn-outline btn-sm" onClick={onOpenMenu}>
-              Menu
-            </button>
+<button className="btn btn-outline btn-sm p-0.5 mr-px" onClick={onOpenMenu} title="Menu">
+               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+               </svg>
+             </button>
             <button className="btn btn-primary btn-sm" onClick={onAddIncome}>
               + Income
             </button>
@@ -58,11 +60,11 @@ export function Header({ onAddIncome, onAddWithdraw, onOpenMenu }: HeaderProps) 
               </button>
             ) : (
               <div className="relative" ref={userMenuRef}>
-                <button
-                  className="btn btn-outline btn-sm relative"
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                >
-                  {username}
+<button
+                   className="btn btn-outline btn-sm relative text-[8px]"
+                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                 >
+                   {username}
                   {isDemo && (
                     <span className="absolute -top-1 -right-1 w-2 h-2 bg-warning-500 rounded-full"></span>
                   )}

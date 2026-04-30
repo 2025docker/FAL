@@ -247,6 +247,7 @@ export function DashboardPage() {
   }
 
   return (
+    <>
     <div className="min-h-screen bg-gray-50">
       <Header
         onAddIncome={() => openModal('income')}
@@ -393,7 +394,11 @@ export function DashboardPage() {
             kpiName={notesModal.kpiName}
           />
         )}
-      </>
     </div>
+
+    <footer className="py-4 text-center text-sm text-gray-500">
+      SSIR-FAL V.1.0.1 @2026
+    </footer>
+    </>
   );
 }
