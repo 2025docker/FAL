@@ -326,56 +326,58 @@ export function DashboardPage() {
                 <AssetGrid onAssetClick={handleQuickBuy} />
               </div>
             </div>
-          </div>
         </div>
       </div>
 
-      <IncomeModal
-        isOpen={activeModal === 'income'}
-        onClose={() => closeModal()}
-        onSubmit={handleIncomeSubmit}
-        currentDcaValue={kpis?.dcaValue || 0}
-        settings={settings}
-      />
+      <>
+        <IncomeModal
+          isOpen={activeModal === 'income'}
+          onClose={() => closeModal()}
+          onSubmit={handleIncomeSubmit}
+          currentDcaValue={kpis?.dcaValue || 0}
+          settings={settings}
+        />
 
-      <WithdrawModal
-        isOpen={activeModal === 'withdraw'}
-        onClose={() => closeModal()}
-        onSubmit={handleWithdrawSubmit}
-        currentDcaValue={kpis?.dcaValue || 0}
-      />
+        <WithdrawModal
+          isOpen={activeModal === 'withdraw'}
+          onClose={() => closeModal()}
+          onSubmit={handleWithdrawSubmit}
+          currentDcaValue={kpis?.dcaValue || 0}
+        />
 
-      <MenuModal
-        isOpen={activeModal === 'menu'}
-        onClose={() => closeModal()}
-        onExport={handleExport}
-        onImport={handleImport}
-        onClear={handleClear}
-        onOpenInfo={() => { closeModal(); openModal('info'); }}
-      />
+        <MenuModal
+          isOpen={activeModal === 'menu'}
+          onClose={() => closeModal()}
+          onAddIncome={() => { closeModal(); openModal('income'); }}
+          onWithdraw={() => { closeModal(); openModal('withdraw'); }}
+          onImport={handleImport}
+          onClear={handleClear}
+          onOpenInfo={() => { closeModal(); openModal('info'); }}
+        />
 
-      <InfoModal
-        isOpen={activeModal === 'info'}
-        onClose={() => closeModal()}
-      />
+        <InfoModal
+          isOpen={activeModal === 'info'}
+          onClose={() => closeModal()}
+        />
 
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept=".json"
-        className="hidden"
-        onChange={handleFileImport}
-      />
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".json"
+          className="hidden"
+          onChange={handleFileImport}
+        />
 
-      {toasts.map(toast => (
-        <div
-          key={toast.id}
-          className={`toast ${toast.type === 'error' ? 'bg-danger-600' : toast.type === 'success' ? 'bg-success-600' : 'bg-gray-800'}`}
-          onClick={() => removeToast(toast.id)}
-        >
-          {toast.message}
-        </div>
-      ))}
+        {toasts.map(toast => (
+          <div
+            key={toast.id}
+            className={`toast ${toast.type === 'error' ? 'bg-danger-600' : toast.type === 'success' ? 'bg-success-600' : 'bg-gray-800'}`}
+            onClick={() => removeToast(toast.id)}
+          >
+            {toast.message}
+          </div>
+        ))}
+      </>
     </div>
   );
 }
