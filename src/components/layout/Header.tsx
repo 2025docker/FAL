@@ -28,21 +28,19 @@ export function Header({ onAddIncome, onAddWithdraw, onOpenMenu }: HeaderProps) 
           </div>
 
           <div className="flex gap-1.5 items-center flex-shrink-0">
-            <button className="btn btn-success btn-sm !px-2.5 !py-1.5 text-xs flex items-center gap-1" onClick={onAddIncome}>
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M5 2v6M2 5h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-success-500 text-white hover:bg-success-600 transition-colors shadow-sm" onClick={onAddIncome} title="Add Income">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M7 3v8M3 7h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
               </svg>
-              Inc
             </button>
-            <button className="btn btn-danger btn-sm !px-2.5 !py-1.5 text-xs flex items-center gap-1" onClick={onAddWithdraw}>
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-danger-500 text-white hover:bg-danger-600 transition-colors shadow-sm" onClick={onAddWithdraw} title="Withdraw">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
               </svg>
-              Wdr
             </button>
-            <button className="btn btn-outline btn-sm p-1.5" onClick={onOpenMenu} title="Menu">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors" onClick={onOpenMenu} title="Menu">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 4h10M2 7h10M2 10h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
             </button>
           </div>
