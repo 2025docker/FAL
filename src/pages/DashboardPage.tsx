@@ -20,9 +20,11 @@ import { formatCurrency, exportToJson } from '@/utils/format';
 import type { TransactionType } from '@/types';
 
 export function DashboardPage() {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const { transactions, dcaTransactions, settings, engine, kpis, loadingAll, addTransaction, addDcaTransaction, deleteTransaction, batchInsertTransactions, isMutating } = useFinance();
   const { activeModal, openModal, closeModal, notesModal, openNotesModal, closeNotesModal } = useModal();
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const username = user?.user_metadata?.username || user?.email?.split('@')[0] || 'User';
   const { filter, setFilter, dateFrom, setDateFrom, dateTo, setDateTo, sortBy, setSortBy, keyword, setKeyword, page, setPage, pageSize } = useFilters();
   const { toasts, showToast, removeToast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -248,7 +250,7 @@ export function DashboardPage() {
 
   return (
     <>
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header
         onAddIncome={() => openModal('income')}
         onAddWithdraw={() => openModal('withdraw')}
@@ -336,7 +338,7 @@ export function DashboardPage() {
               </div>
             </div>
         </div>
-      </div>
+       </div>
 
       <>
         <IncomeModal
@@ -362,6 +364,11 @@ export function DashboardPage() {
           onImport={handleImport}
           onClear={handleClear}
           onOpenInfo={() => { closeModal(); openModal('info'); }}
+          onToggleUserMenu={() => setIsUserMenuOpen(!isUserMenuOpen)}
+          onLogout={() => { signOut(); setIsUserMenuOpen(false); closeModal(); }}
+          username={username}
+          email={user?.email || ''}
+          isUserMenuOpen={isUserMenuOpen}
         />
 
         <InfoModal
@@ -394,7 +401,7 @@ export function DashboardPage() {
             kpiName={notesModal.kpiName}
           />
         )}
-        </>
+      </>
     </div>
 
     <footer className="py-4 text-center text-sm text-gray-500">
