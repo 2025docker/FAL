@@ -249,7 +249,7 @@ export function DashboardPage() {
         onOpenMenu={() => openModal('menu')}
       />
 
-      <div className="max-w-7xl mx-auto px-4 py-5">
+      <div className="w-full px-4 py-5">
         {kpis && (
           <>
 <div className="mb-4">
@@ -272,10 +272,8 @@ export function DashboardPage() {
                   <KpiCard icon="📆" label="Monthly Average" value={formatCurrency(kpis.monthlyAverage)} variant="monthly" />
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 mb-4">
-                  <div></div>
+                <div className="mb-4">
                   <CapitalCard value={formatCurrency(kpis.capital, true)} />
-                  <div></div>
                 </div>
              </div>
            </>
