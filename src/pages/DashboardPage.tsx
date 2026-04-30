@@ -253,30 +253,26 @@ export function DashboardPage() {
         {kpis && (
           <>
             <div className="mb-5">
-              <div className="grid grid-cols-4 gap-3 mb-3">
-                 <KpiCard icon="💰" label="Total Income" value={formatCurrency(kpis.totalIncome)} sub={`${kpis.incomeCount} income`} variant="income" />
-                 <KpiCard icon="💸" label="Total Expenses" value={formatCurrency(kpis.totalExpenses)} sub={`${kpis.expenseCount} expense`} variant="expense" />
-                 <KpiCard icon="🏠" label="Total Assets" value={formatCurrency(kpis.assetsValue)} sub={`${kpis.assetBuyCount - kpis.assetSellCount} assets`} variant="asset" />
-                 <KpiCard icon="💳" label="Balance" value={formatCurrency(kpis.balance)} sub="Cashflow" variant="balance" />
+              <div className="grid grid-cols-4 gap-2 mb-2">
+                 <KpiCard icon="💰" label="Income" value={formatCurrency(kpis.totalIncome)} sub={`${kpis.incomeCount}`} variant="income" />
+                 <KpiCard icon="💸" label="Expenses" value={formatCurrency(kpis.totalExpenses)} sub={`${kpis.expenseCount}`} variant="expense" />
+                 <KpiCard icon="🏠" label="Assets" value={formatCurrency(kpis.assetsValue)} sub={`${kpis.assetBuyCount - kpis.assetSellCount}`} variant="asset" />
+                 <KpiCard icon="💳" label="Balance" value={formatCurrency(kpis.balance)} sub="cashflow" variant="balance" />
                </div>
 
-               <div className="grid grid-cols-3 gap-3 mb-3">
-                 <KpiCard icon="📅" label="Daily Average" value={formatCurrency(kpis.dailyAverage)} sub="Per active day" variant="daily" />
-                 <KpiCard icon="📆" label="Monthly Average" value={formatCurrency(kpis.monthlyAverage)} sub="Per active month" variant="monthly" />
-                 <KpiCard icon="📊" label="Savings Rate" value={`${kpis.savingsRate.toFixed(1)}%`} sub="% of income saved" variant="savings" />
-               </div>
+              <div className="grid grid-cols-5 gap-2 mb-2">
+                <KpiCard icon="📅" label="Daily" value={formatCurrency(kpis.dailyAverage)} variant="daily" />
+                <KpiCard icon="📆" label="Monthly" value={formatCurrency(kpis.monthlyAverage)} variant="monthly" />
+                <KpiCard icon="📊" label="Save %" value={`${kpis.savingsRate.toFixed(1)}%`} variant="savings" />
+                <KpiCard icon="🔒" label="Locked" value={formatCurrency(kpis.lockedSavings)} variant="locked" />
+                <KpiCard icon="📉" label="DCA" value={formatCurrency(kpis.dcaValue)} variant="dca" />
+              </div>
 
-               <div className="grid grid-cols-3 gap-3 mb-3">
-                 <KpiCard icon="🔒" label="Locked Savings" value={formatCurrency(kpis.lockedSavings)} sub="auto" variant="locked" />
-                 <KpiCard icon="📉" label="Total DCA" value={formatCurrency(kpis.dcaValue)} sub="invested" variant="dca" />
-                 <KpiCard icon="📈" label="Asset Ratio" value={`${kpis.assetRatio.toFixed(1)}%`} sub="% in assets" variant="ratio" />
-               </div>
-
-              <div className="max-w-md mx-auto mb-5">
+              <div className="grid grid-cols-2 gap-2 mb-4 max-w-lg mx-auto">
+                <KpiCard icon="📈" label="Asset Ratio" value={`${kpis.assetRatio.toFixed(1)}%`} sub="% assets" variant="ratio" />
                 <CapitalCard value={formatCurrency(kpis.capital, true)} />
               </div>
-            </div>
-          </>
+           </>
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
